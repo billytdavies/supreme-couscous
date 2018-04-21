@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour {
-
+	public GameObject gun;
 	public Transform spawnpoint;
 	public Rigidbody rb;
 	public float speed = 10.0f;
@@ -38,6 +38,10 @@ public class CharacterController : MonoBehaviour {
 			if(onFloor == true) {
 				rb.velocity = new Vector3(0, 7, 0);
 			}	
+		}
+		if (Input.GetButtonDown("Fire1"))
+		{
+			gun.GetComponent<GunController>().Shoot();
 		}
 	}
 

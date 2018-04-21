@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 	public GameObject puffParticles;
-	void onCollisionEnter(Collider other){
+	void OnTriggerEnter(Collider other){
+		if(other.tag != "Gun"){
 		var particles = Instantiate(puffParticles,transform.position,Quaternion.identity);
 		Destroy(particles,2f);
 		Destroy(gameObject);
+		}
 	}
 }
