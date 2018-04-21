@@ -29,10 +29,14 @@ public class EnemyMove : MonoBehaviour {
 			} else if(!PlayerCheck()){
 				state = "idle";
 			}
-        Vector3 direction = (NearestPlayer(players).position - transform.position).normalized;
+        Vector3 direction = (NearestPlayer(players).position - gun.transform.position).normalized;
 		Quaternion lookRotation = Quaternion.LookRotation(direction);
-		if(lookRotation == transform.rotation){gun.GetComponent<GunController>().Shoot();}
-		else{transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);}
+		if(lookRotation == gun.transform.rotation){gun.GetComponent<GunController>().Shoot();}
+		else{
+			transform.rotation = Quaternion.Euler(0,Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y,0);	
+			gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
+		
+		}
 
 		} else if(state == "retreat"){
 			if(!PlayerCheck()){
