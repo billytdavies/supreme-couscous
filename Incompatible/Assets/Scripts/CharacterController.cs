@@ -18,26 +18,29 @@ public class CharacterController : MonoBehaviour {
 	void Update () {
 		if(canMove)
 		{
-			float translation = Input.GetAxisRaw("Vertical") * speed;
-			float strafe = Input.GetAxisRaw("Horizontal") * speed;
-			translation *= Time.deltaTime;
-			strafe *= Time.deltaTime;
-
-			transform.Translate(strafe, 0, translation);
-		
-			if (Input.GetKeyDown("space"))
-			{
-				if(onFloor == true) {
-					rb.velocity = new Vector3(0, 7, 0);
-				}	
-			}
+			move();
 		}
 		if (Input.GetKeyDown("escape"))
 		{
 			Cursor.lockState = CursorLockMode.None;
 		}
-
 	}
+	void move(){
+		float translation = Input.GetAxisRaw("Vertical") * speed;
+		float strafe = Input.GetAxisRaw("Horizontal") * speed;
+		translation *= Time.deltaTime;
+		strafe *= Time.deltaTime;
+
+		transform.Translate(strafe, 0, translation);
+	
+		if (Input.GetKeyDown("space"))
+		{
+			if(onFloor == true) {
+				rb.velocity = new Vector3(0, 7, 0);
+			}	
+		}
+	}
+
 	void OnCollisionEnter(Collision other)
 	{
 		if(other.transform.tag == "Floor")
