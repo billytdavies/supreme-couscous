@@ -26,6 +26,9 @@ public class PlayerMove : MonoBehaviour {
 		{
 			Cursor.lockState = CursorLockMode.None;
 		}
+		if(hp<=0){
+			gameObject.GetComponent<SaveScript>().ResetIteration();
+		}
 	}
 	void move(){
 		float translation = Input.GetAxisRaw("Vertical") * speed;
@@ -54,10 +57,6 @@ public class PlayerMove : MonoBehaviour {
 			onFloor = true;
 		}
 		
-		if (other.transform.tag == "Enemy")
-		{
-			transform.position = spawnpoint.transform.position;
-		}
 	}
 	void OnCollisionExit(Collision other)
 	{

@@ -24,8 +24,8 @@ public class EnemyMove : MonoBehaviour {
         {
             players[i] = goArray[i].transform;
         }
-		print(players);
-    }
+		print(players.Length);
+	}
 
     void Update ()
     {
@@ -79,8 +79,9 @@ public class EnemyMove : MonoBehaviour {
                 hp = 100;
                 state = "idle";
             }
-            Vector3 direction = (NearestPlayer(players).position - transform.position).normalized * -1;
-            transform.Translate(direction * Time.deltaTime * 5);
+            Vector3 direction = (transform.position - NearestPlayer(players).position).normalized;
+			transform.Translate(direction * Time.deltaTime * 5);
+
         }
     }
 
@@ -97,7 +98,7 @@ public class EnemyMove : MonoBehaviour {
 	}
 	Transform NearestPlayer(Transform[] players){
 		Transform tMin = null;
-		float minDist = Mathf.Infinity;
+		float minDist = 10f;
 		Vector3 currentPos = transform.position;
 		foreach (Transform t in players)
 		{

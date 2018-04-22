@@ -677,6 +677,47 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 994281084}
   m_Mesh: {fileID: 4300000, guid: f3a2104c39af2f9439af3207216df3da, type: 3}
+--- !u!1 &1285625075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1285625077}
+  - component: {fileID: 1285625076}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1285625076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1285625075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc9e34796a7db642bcae31f18c6e097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1285625077
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1285625075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.423453, y: -1.0155792, z: 11.149837}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1727334466}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1371552017
 Prefab:
   m_ObjectHideFlags: 0
@@ -954,7 +995,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clone: {fileID: 1295020371091802, guid: 0b43befeb419bc24c969e20ce9fe7531, type: 2}
   spawnpoint: {fileID: 1372579569}
-  map: {fileID: 0}
+  map: {fileID: 1979004024}
+  enemies: {fileID: 1285625075}
 --- !u!1 &1727334461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,12 +1091,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1727334461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0.8, z: -39.5}
+  m_LocalPosition: {x: 3.3, y: 1.8155792, z: -30.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 990969671}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1285625077}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1727334467
 Rigidbody:
