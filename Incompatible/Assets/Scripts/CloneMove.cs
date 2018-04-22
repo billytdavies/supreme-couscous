@@ -5,37 +5,59 @@ using UnityEngine;
 public class CloneMove : MonoBehaviour {
 
 	public Iteration It;
-	Iteration ItBackup;
+	int ItLength;
+	int ItCount=0;
 	public GameObject poof;
 	bool Stopped;
+	Transform head;
+	GameObject headgo;
+	void Start(){
+		head = transform.GetChild(0);
+		headgo = head.gameObject;
+		ItLength = It.Positions.Count;
+	}
 	void Update () {
-		if(It.Positions.Count != 0){
+		if(!Stopped){
 			if(Time.frameCount % 2 == 0){
-				//ItBackup.Positions.Enqueue(It.Positions.Peek());
-				//ItBackup.Rotations.Enqueue(It.Rotations.Peek());
+				ItCount++;
+
 				Vector3 newPosition = It.Positions.Dequeue();
 				Quaternion newRotation = It.Rotations.Dequeue();
+				
 				//print("Clone "+It.Positions.ToArray().Length);
 				//print("Clone "+newPosition.y.ToString());
+				
 				transform.position = newPosition;
-				transform.rotation = newRotation;
+				transform.rotation = Quaternion.Euler(0,newRotation.y,0);
+				headgo.transform.rotation = Quaternion.Euler(0,newRotation.y,0);
+				It.Positions.Enqueue(newPosition);
+				It.Rotations.Enqueue(newRotation);
+
+				if(ItCount==ItLength){
+					Stop();
+				}
 			}
-		} else{
-            if(!Stopped){Stop();}
-        }
+		}
     }
 
     private void Stop()
     {
+		print("Stopped");
         Stopped = true;
-		Instantiate(poof, transform.position, Quaternion.identity);
+		var poofe = Instantiate(poof, transform.position, Quaternion.identity);
+		Destroy(poofe,2f);
         transform.position = new Vector3(0, -10, 0);
     }
 
-    void Restart(){
-		while(ItBackup.Positions.Peek() !=null){
-			It.Positions.Enqueue(ItBackup.Positions.Dequeue());
-			It.Rotations.Enqueue(ItBackup.Rotations.Dequeue());
+    public void Restart(){
+		while(ItCount!=ItLength){
+			ItCount++;
+			It.Positions.Enqueue(It.Positions.Dequeue());
+			It.Rotations.Enqueue(It.Rotations.Dequeue());	
 		}
+		
+		print("Restarted");
+		Stopped = false;
+		ItCount=0;
 	}
 }
