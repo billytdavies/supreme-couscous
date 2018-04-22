@@ -29,7 +29,9 @@ public class CloneMove : MonoBehaviour {
 				
 				transform.position = newPosition;
 				transform.rotation = Quaternion.Euler(0,newRotation.y,0);
-				headgo.transform.rotation = Quaternion.Euler(0,newRotation.y,0);
+				print(transform.rotation);
+				headgo.transform.rotation = newRotation;
+				
 				It.Positions.Enqueue(newPosition);
 				It.Rotations.Enqueue(newRotation);
 

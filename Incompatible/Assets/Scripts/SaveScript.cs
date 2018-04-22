@@ -19,7 +19,7 @@ public class SaveScript : MonoBehaviour {
 	void Update () {
 		if(Time.frameCount % 2 == 0){
 			CurrIt.Positions.Enqueue(transform.position);
-			CurrIt.Rotations.Enqueue(transform.rotation);
+			CurrIt.Rotations.Enqueue(Camera.main.transform.rotation);
 		}
 
 		if(Input.GetKeyDown(KeyCode.H)){
