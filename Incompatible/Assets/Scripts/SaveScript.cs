@@ -10,7 +10,11 @@ public class SaveScript : MonoBehaviour {
 	Iteration CurrIt;
 	bool Stop;
 	Iteration PrevIt;
-	public List<GameObject> clones = new List<GameObject>();
+	List<GameObject> clones = new List<GameObject>();
+	int ShootFrameDifference;
+
+	int ShootTime;
+	int PrevShootTime;
 	void Start () {
 		CurrIt = new Iteration();
 	}
@@ -24,6 +28,15 @@ public class SaveScript : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.H)){
 			ResetIteration();
+		}
+		if (Input.GetButtonDown("Fire1"))
+		{
+			ShootTime = Time.frameCount;
+
+			ShootFrameDifference = ShootTime-PrevShootTime;
+			PrevShootTime = ShootTime;
+
+			CurrIt.Shoot.Enqueue(ShootFrameDifference);
 		}
 	}
 	public void ResetIteration(){
@@ -39,7 +52,6 @@ public class SaveScript : MonoBehaviour {
 
 		clones.Add(newClone);
 		
-		print(newClone);
 		//var newCloneHead = Instantiate(CloneHead,spawnpoint.position,Quaternion.identity);
 		//var newCloneGun = Instantiate(CloneGun,spawnpoint.position,Quaternion.identity);
 
@@ -49,6 +61,5 @@ public class SaveScript : MonoBehaviour {
 			cl.GetComponent<CloneMove>().Restart();
 		}
 
-		print(clones.ToArray().ToString());
 	}
 }
