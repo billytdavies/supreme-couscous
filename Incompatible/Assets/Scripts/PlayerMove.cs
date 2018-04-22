@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour {
+public class PlayerMove : MonoBehaviour {
 	public GameObject gun;
 	public Transform spawnpoint;
 	public Rigidbody rb;
 	public float speed = 10.0f;
 	private bool onFloor = true;
 	private bool canMove = true;
+
+	public int hp;
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;

@@ -9,5 +9,14 @@ public class Bullet : MonoBehaviour {
 			Instantiate(puffParticles,transform.position,Quaternion.identity);
 			Destroy(gameObject);
 		}
+		if(other.GetComponent<Destructible>() != null){
+			other.GetComponent<Destructible>().hp -= 5;
+		}
+		if(other.tag == "Enemy"){
+			other.GetComponent<EnemyMove>().hp -=5;
+		}
+		if(other.tag == "Player"){
+			other.GetComponent<PlayerMove>().hp -=5;
+		}
 	}
 }

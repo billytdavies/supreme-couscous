@@ -7,53 +7,84 @@ public class EnemyMove : MonoBehaviour {
 	public int hp;
 	public GameObject gun;
 	Transform[] players;
-	void Start(){
-		state = "idle";
-		GameObject[] goArray = GameObject.FindGameObjectsWithTag("Player");
-		players = new Transform[goArray.Length];
- 
- 		for(int i = 0; i < goArray.Length; i++)
- 		{
-     		players [i] = goArray[i].transform;
- 		}
-	}
+	Vector3 startpos;
+	void Start()
+    {
+        startpos = transform.position;
+        state = "idle";
+        LookForPlayers();
+    }
 
-	void Update () {
-		if(state == "idle"){
-			if(PlayerCheck()){
-				state = "attack";
-			}
-		} else if(state == "attack"){
-			if(hp<50){
-				state = "retreat";
-			} else if(!PlayerCheck()){
-				state = "idle";
-			}
-        Vector3 direction = (NearestPlayer(players).position - gun.transform.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation(direction);
-		RaycastHit hit;
-		if(Physics.Raycast(gun.transform.position,gun.transform.forward,out hit,10)){
-			if(hit.transform.tag=="Player"){
-			gun.GetComponent<GunController>().Shoot();
-			}
-		} else{
-			transform.rotation = Quaternion.Euler(0,Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y,0);	
-			gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
-		
+    public void LookForPlayers()
+    {
+        GameObject[] goArray = GameObject.FindGameObjectsWithTag("Player");
+        players = new Transform[goArray.Length];
+
+        for (int i = 0; i < goArray.Length; i++)
+        {
+            players[i] = goArray[i].transform;
+        }
+		print(players);
+    }
+
+    void Update ()
+    {
+        StateCycle();
+		if(hp<=0){
+			transform.position = new Vector3(0,-50,0);
 		}
+    }
 
-		} else if(state == "retreat"){
-			if(!PlayerCheck()){
-				hp = 100;
-				state = "idle";
-			}
-		Vector3 direction = (NearestPlayer(players).position - transform.position).normalized*-1;
-		transform.Translate(direction*Time.deltaTime*3);
-		}
+    private void StateCycle()
+    {
+        if (state == "idle")
+        {
+            if (PlayerCheck())
+            {
+                state = "attack";
+            }
+        }
+        else if (state == "attack")
+        {
+            if (hp < 50)
+            {
+                state = "retreat";
+            }
+            else if (!PlayerCheck())
+            {
+                state = "idle";
+            }
+            Vector3 direction = (NearestPlayer(players).position - gun.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            RaycastHit hit;
+            if (Physics.Raycast(gun.transform.position, gun.transform.forward, out hit, 10))
+            {
+                if (hit.transform.tag == "Player")
+                {
+                    gun.GetComponent<GunController>().Shoot();
+                }
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y, 0);
+                gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
 
-	}
-	
-	bool PlayerCheck(){
+            }
+
+        }
+        else if (state == "retreat")
+        {
+            if (!PlayerCheck())
+            {
+                hp = 100;
+                state = "idle";
+            }
+            Vector3 direction = (NearestPlayer(players).position - transform.position).normalized * -1;
+            transform.Translate(direction * Time.deltaTime * 5);
+        }
+    }
+
+    bool PlayerCheck(){
 		bool IsPlayer = false;
 		Collider[] Colliders = Physics.OverlapSphere(transform.position,10);
 		foreach (Collider col in Colliders)
@@ -79,4 +110,9 @@ public class EnemyMove : MonoBehaviour {
 		}
 		return tMin;
 	}
+	public void reset(){
+		transform.position=startpos;
+		hp = 100;
+		state = "idle";
+	}	
 }

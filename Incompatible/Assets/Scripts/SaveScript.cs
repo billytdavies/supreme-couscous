@@ -15,6 +15,8 @@ public class SaveScript : MonoBehaviour {
 
 	int ShootTime;
 	int PrevShootTime;
+	public GameObject map;
+	public GameObject enemies;
 	void Start () {
 		CurrIt = new Iteration();
 	}
@@ -41,7 +43,7 @@ public class SaveScript : MonoBehaviour {
 	}
 	public void ResetIteration(){
 		transform.position = spawnpoint.position;
-
+		gameObject.GetComponent<PlayerMove>().hp = 100;
 		//make a new clone from the previous iteration
 		PrevIt = CurrIt;
 		CurrIt = new Iteration();
@@ -60,6 +62,11 @@ public class SaveScript : MonoBehaviour {
 		foreach (GameObject cl in clones){
 			cl.GetComponent<CloneMove>().Restart();
 		}
+
+		//reset the map
+
+		map.GetComponent<MapController>().reset();
+		enemies.GetComponent<EnemyController>().reset();
 
 	}
 }

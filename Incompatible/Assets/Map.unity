@@ -865,13 +865,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1521481500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3379a9d2eb91ced468a97c5c49128e96, type: 3}
+  m_Script: {fileID: 11500000, guid: af1b213686ae9c042a5d99401dedea00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 487141831}
   spawnpoint: {fileID: 1372579569}
   rb: {fileID: 1521481501}
   speed: 5
+  hp: 100
 --- !u!23 &1521481503
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -953,6 +954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Clone: {fileID: 1295020371091802, guid: 0b43befeb419bc24c969e20ce9fe7531, type: 2}
   spawnpoint: {fileID: 1372579569}
+  map: {fileID: 0}
 --- !u!1 &1727334461
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +970,7 @@ GameObject:
   - component: {fileID: 1727334467}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1190,6 +1192,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1979004025}
+  - component: {fileID: 1979004026}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -1216,3 +1219,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1979004026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1979004024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f36beae2fec374888602f27fbd61ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
