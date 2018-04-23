@@ -8,6 +8,8 @@ public class EnemyMove : MonoBehaviour {
 	public GameObject gun;
 	Transform[] players;
 	Vector3 startpos;
+
+	public int range;
 	void Start()
     {
         startpos = transform.position;
@@ -24,7 +26,6 @@ public class EnemyMove : MonoBehaviour {
         {
             players[i] = goArray[i].transform;
         }
-		print(players.Length);
 	}
 
     void Update ()
@@ -56,20 +57,13 @@ public class EnemyMove : MonoBehaviour {
             }
             Vector3 direction = (NearestPlayer(players).position - gun.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            RaycastHit hit;
-            if (Physics.Raycast(gun.transform.position, gun.transform.forward, out hit, 10))
-            {
-                if (hit.transform.tag == "Player")
-                {
-                    gun.GetComponent<GunController>().Shoot();
-                }
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y, 0);
-                gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
+            gun.GetComponent<GunController>().Shoot();
 
-            }
+
+            transform.rotation = Quaternion.Euler(0, Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y, 0);
+            gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
+
+
 
         }
         else if (state == "retreat")
@@ -87,7 +81,7 @@ public class EnemyMove : MonoBehaviour {
 
     bool PlayerCheck(){
 		bool IsPlayer = false;
-		Collider[] Colliders = Physics.OverlapSphere(transform.position,10);
+		Collider[] Colliders = Physics.OverlapSphere(transform.position,range);
 		foreach (Collider col in Colliders)
 		{
 			if(col.tag == "Player"){
@@ -98,7 +92,7 @@ public class EnemyMove : MonoBehaviour {
 	}
 	Transform NearestPlayer(Transform[] players){
 		Transform tMin = null;
-		float minDist = 10f;
+		float minDist = (float)range;
 		Vector3 currentPos = transform.position;
 		foreach (Transform t in players)
 		{

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
 	public GameObject gun;
-	public Transform spawnpoint;
 	public Rigidbody rb;
 	public float speed = 10.0f;
 	private bool onFloor = true;

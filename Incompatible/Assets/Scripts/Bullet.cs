@@ -16,7 +16,10 @@ public class Bullet : MonoBehaviour {
 			other.GetComponent<EnemyMove>().hp -=5;
 		}
 		if(other.tag == "Player"){
-			other.GetComponent<PlayerMove>().hp -=5;
+			other.GetComponent<PlayerMove>().hp -=8;
+		}
+		if(other.tag == "Quit"){
+			Application.Quit();
 		}
 	}
 }
