@@ -47,34 +47,17 @@ public class EnemyMove : MonoBehaviour {
         }
         else if (state == "attack")
         {
-            if (hp < 50)
-            {
-                state = "retreat";
-            }
-            else if (!PlayerCheck())
-            {
-                state = "idle";
-            }
-            Vector3 direction = (NearestPlayer(players).position - gun.transform.position).normalized;
+            Vector3 direction = (NearestPlayer(players).position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             gun.GetComponent<GunController>().Shoot();
+            print(players);
+            print(state);
 
 
             transform.rotation = Quaternion.Euler(0, Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20).eulerAngles.y, 0);
             gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, lookRotation, Time.deltaTime * 20);
 
 
-
-        }
-        else if (state == "retreat")
-        {
-            if (!PlayerCheck())
-            {
-                hp = 100;
-                state = "idle";
-            }
-            Vector3 direction = (transform.position - NearestPlayer(players).position).normalized;
-			transform.Translate(direction * Time.deltaTime * 5);
 
         }
     }
@@ -103,7 +86,8 @@ public class EnemyMove : MonoBehaviour {
 				minDist = dist;
 			}
 		}
-		return tMin;
+        if(tMin!=null){return tMin;}
+    	else{return transform;}
 	}
 	public void reset(){
 		transform.position=startpos;
